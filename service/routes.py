@@ -51,10 +51,12 @@ def create_accounts():
     account.create()
     message = account.serialize()
     account_info = account.__repr__()
+    app.logger.info("Account information: [%s]", account_info)
     location_url = url_for("get_accounts", account_id=account.id, _external=True)
     return make_response(
         jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
     )
+
 
 ######################################################################
 # LIST ALL ACCOUNTS
@@ -88,6 +90,7 @@ def get_accounts(account_id):
     if not account:
         abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account_id}] could not be found.")
     return account.serialize(), status.HTTP_200_OK
+
 
 ######################################################################
 # UPDATE AN EXISTING ACCOUNT
